@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@theme {
+  --font-family-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  
+  --color-municipio-50: #fff5f5;
+  --color-municipio-100: #ffecec;
+  --color-municipio-200: #ffcccc;
+  --color-municipio-300: #ff9a9a;
+  --color-municipio-400: #ff5f5f;
+  --color-municipio-500: #e11d1d;
+  --color-municipio-600: #c21a1a;
+  --color-municipio-700: #9b1515;
+  --color-municipio-800: #7a1010;
+  --color-municipio-900: #4c0a0a;
+  --color-municipioBlack: #0b0b0b;
+  
+  --border-radius-lg-xl: 12px;
+}
+
+/* Estilos base */
+html, body, #root { 
+  height: 100%; 
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  color: #0f172a;
+}
+
+/* Componentes personalizados */
+.app-container {
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1.5rem 1rem;
+}
+
+@media (min-width: 640px) {
+  .app-container {
+    padding: 1.5rem 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .app-container {
+    padding: 2rem;
+  }
+}
+
+.card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.95) 100%);
+  backdrop-filter: blur(6px);
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  box-shadow: 0 10px 30px rgba(15,23,42,0.06);
+  border: 1px solid rgba(15,23,42,0.04);
+}
+
+.btn-primary {
+  background: linear-gradient(to right, #e11d1d, #c21a1a);
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border-radius: 0.6rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(to right, #c21a1a, #9b1515);
+}
+
+.input-modern {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(6px);
+  transition: all 0.2s;
+}
+
+.input-modern:focus {
+  outline: none;
+  ring: 2px;
+  ring-color: #e11d1d;
+  border-color: transparent;
+}
+
+.text-muted {
+  color: #64748b;
+}
+
+.glass-effect {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
