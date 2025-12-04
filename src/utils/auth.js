@@ -8,7 +8,7 @@ import { db } from "../firebase";
  */
 export async function getUserDoc(uid) {
   if (!uid) return null;
-  const ref = doc(db, "users_demo", uid);
+  const ref = doc(db, "users", uid);
   const snap = await getDoc(ref);
   if (!snap.exists()) return null;
   return snap.data();

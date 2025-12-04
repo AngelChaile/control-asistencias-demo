@@ -56,7 +56,7 @@ export async function saveAusenciaJustificacion({ legajo, fecha = new Date(), ju
     // buscar empleado por legajo (completar nombre/apellido/lugarTrabajo si existe)
     let empleado = null;
     try {
-      const qEmp = query(collection(db, "empleados_demo"), where("legajo", "==", String(legajo)));
+      const qEmp = query(collection(db, "empleados"), where("legajo", "==", String(legajo)));
       const snapEmp = await getDocs(qEmp);
       if (!snapEmp.empty) {
         const d = snapEmp.docs[0];
@@ -81,7 +81,7 @@ export async function saveAusenciaJustificacion({ legajo, fecha = new Date(), ju
 
     // upsert ausencia legajo+fecha
     const q = query(
-      collection(db, "ausencias_demo"),
+      collection(db, "ausencias"),
       where("legajo", "==", String(legajo)),
       where("fecha", "==", fechaStr)
     );
@@ -95,7 +95,7 @@ export async function saveAusenciaJustificacion({ legajo, fecha = new Date(), ju
       return result;
     } else {
       const payloadCreate = { ...payload, createdAt: serverTimestamp() };
-      const ref = await addDoc(collection(db, "ausencias_demo"), payloadCreate);
+      const ref = await addDoc(collection(db, "ausencias"), payloadCreate);
       const result = { id: ref.id, ...payloadCreate };
       console.log("DEBUG: ausencias.save -> created", result);
       return result;
