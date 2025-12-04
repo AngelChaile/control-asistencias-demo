@@ -22,7 +22,7 @@ import { db } from "../firebase";
 export async function validarToken(token) {
   if (!token) throw new Error("Token requerido.");
 
-  const q = query(collection(db, "tokens"), where("token", "==", token));
+  const q = query(collection(db, "tokens_demo"), where("token", "==", token));
   const snap = await getDocs(q);
   if (snap.empty) throw new Error("QR inválido o no encontrado.");
 
@@ -51,7 +51,7 @@ export async function validarToken(token) {
  */
 export async function buscarEmpleadoPorLegajo(legajo) {
   if (!legajo) return null;
-  const q = query(collection(db, "empleados"), where("legajo", "==", String(legajo)));
+  const q = query(collection(db, "empleados_demo"), where("legajo", "==", String(legajo)));
   const snap = await getDocs(q);
   if (snap.empty) return null;
   const d = snap.docs[0];
@@ -66,7 +66,7 @@ export async function registrarNuevoEmpleado(emp) {
     throw new Error("Datos incompletos para registrar empleado.");
   }
 
-  const ref = await addDoc(collection(db, "empleados"), {
+  const ref = await addDoc(collection(db, "empleados_demo"), {
     legajo: String(emp.legajo),
     nombre: emp.nombre,
     apellido: emp.apellido,
@@ -96,7 +96,7 @@ export async function registrarAsistenciaPorLegajo(legajo, token = null) {
   if (!empleado) throw new Error("Empleado no encontrado.");
 
   // Obtener todas las asistencias del legajo
-  const q = query(collection(db, "asistencias"), where("legajo", "==", String(legajo)));
+  const q = query(collection(db, "asistencias_demo"), where("legajo", "==", String(legajo)));
   const snap = await getDocs(q);
 
   let last = null;
@@ -152,7 +152,7 @@ export async function registrarAsistenciaPorLegajo(legajo, token = null) {
     tipo = "ENTRADA";
   }
 
-  const newDoc = await addDoc(collection(db, "asistencias"), {
+  const newDoc = await addDoc(collection(db, "asistencias_demo"), {
     legajo: String(legajo),
     nombre: empleado.nombre,
     apellido: empleado.apellido,
@@ -187,7 +187,7 @@ export async function fetchAsistenciasByDate(date = new Date(), area = null) {
   const fechaStr = date.toLocaleDateString("es-AR");
   const constraints = [where("fecha", "==", fechaStr)];
   if (area) constraints.push(where("lugarTrabajo", "==", area));
-  const q = query(collection(db, "asistencias"), ...constraints);
+  const q = query(collection(db, "asistencias_demo"), ...constraints);
   const snap = await getDocs(q);
   return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
 }
@@ -208,7 +208,7 @@ export async function fetchAsistenciasByRange({ desde = null, hasta = null, lega
   // QUITAMOS el filtro de área del servidor para hacerlo case-insensitive en el cliente
   const constraints = [];
   // if (area) constraints.push(where("lugarTrabajo", "==", area)); // ← ELIMINADO
-  const q = query(collection(db, "asistencias"), ...constraints);
+  const q = query(collection(db, "asistencias_demo"), ...constraints);
   const snap = await getDocs(q);
   const rows = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
 
@@ -271,7 +271,7 @@ export async function fetchAsistenciasByRange({ desde = null, hasta = null, lega
 export async function fetchAusenciasByRange({ desde = null, hasta = null, area = null } = {}) {
   const constraints = [];
   if (area) constraints.push(where("lugarTrabajo", "==", area));
-  const q = query(collection(db, "ausencias"), ...constraints);
+  const q = query(collection(db, "ausencias_demo"), ...constraints);
 
   try {
     const snap = await getDocs(q);
@@ -343,7 +343,7 @@ export async function fetchAsistenciasPage({ desde = null, hasta = null, area = 
   constraints.push(orderBy("createdAt", "desc"));
   constraints.push(limit(pageSize));
 
-  const qArgs = [collection(db, "asistencias"), ...constraints];
+  const qArgs = [collection(db, "asistencias_demo"), ...constraints];
   const q = cursorDoc ? query(...qArgs, startAfter(cursorDoc)) : query(...qArgs);
 
   const snap = await getDocs(q);
@@ -369,7 +369,7 @@ export async function fetchAsistenciasTodayPage({ area = null, pageSize = 50, cu
   constraints.push(orderBy("hora", "desc"));
   constraints.push(limit(pageSize));
 
-  const qArgs = [collection(db, "asistencias"), ...constraints];
+  const qArgs = [collection(db, "asistencias_demo"), ...constraints];
   const q = cursorDoc ? query(...qArgs, startAfter(cursorDoc)) : query(...qArgs);
 
   const snap = await getDocs(q);

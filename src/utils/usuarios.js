@@ -25,7 +25,7 @@ export async function registrarUsuario(email, password, nombre, apellido, rol, a
     const userCred = await createUserWithEmailAndPassword(auth, email, password);
     const uid = userCred.user.uid;
 
-    await setDoc(doc(db, "users", uid), {
+    await setDoc(doc(db, "users_demo", uid), {
       nombre,
       apellido,
       email,
@@ -50,7 +50,7 @@ export async function registrarUsuario(email, password, nombre, apellido, rol, a
  */
 export async function fetchEmpleadosByLugarTrabajo(lugar) {
   if (!lugar) return [];
-  const q = query(collection(db, "empleados"), where("lugarTrabajo", "==", lugar));
+  const q = query(collection(db, "empleados_demo"), where("lugarTrabajo", "==", lugar));
   const snap = await getDocs(q);
   return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
 }
@@ -59,7 +59,7 @@ export async function fetchEmpleadosByLugarTrabajo(lugar) {
  * fetchAllEmpleados()
  */
 export async function fetchAllEmpleados() {
-  const q = query(collection(db, "empleados"));
+  const q = query(collection(db, "empleados_demo"));
   const snap = await getDocs(q);
   return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
 }
@@ -90,7 +90,7 @@ export async function saveAusenciaJustificacion({ legajo, fecha = new Date(), ju
   // Buscar si ya existe ausencia para ese legajo + fecha
   try {
     const q = query(
-      collection(db, "ausencias"),
+      collection(db, "ausencias_demo"),
       where("legajo", "==", String(legajo)),
       where("fecha", "==", fechaStr)
     );
@@ -115,7 +115,7 @@ export async function saveAusenciaJustificacion({ legajo, fecha = new Date(), ju
     } else {
       // crear nueva ausencia
       const payloadCreate = { ...payload, createdAt: serverTimestamp() };
-      const ref = await addDoc(collection(db, "ausencias"), payloadCreate);
+      const ref = await addDoc(collection(db, "ausencias_demo"), payloadCreate);
       return { id: ref.id, ...payloadCreate };
     }
   } catch (err) {
@@ -134,7 +134,7 @@ export async function fetchEmpleadosPage({ lugar = null, pageSize = 100, cursorD
   constraints.push(orderBy("legajo"));
   constraints.push(limit(pageSize));
 
-  const qArgs = [collection(db, "empleados"), ...constraints];
+  const qArgs = [collection(db, "empleados_demo"), ...constraints];
   const q = cursorDoc ? query(...qArgs, startAfter(cursorDoc)) : query(...qArgs);
 
   const snap = await getDocs(q);

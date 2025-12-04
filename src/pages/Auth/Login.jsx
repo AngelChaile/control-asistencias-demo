@@ -67,7 +67,7 @@ export default function Login() {
         {/* Header */}
         <div className="text-center">
           <div className="mx-auto w-20 h-20 bg-gradient-to-r from-red-500 to-red-600 rounded-2xl flex items-center justify-center shadow-lg mb-6">
-            <span className="text-white text-2xl font-bold">M</span>
+            <span className="text-white text-2xl font-bold">R</span>
           </div>
           <h2 className="text-3xl font-bold text-gray-900">Sistema de Asistencias</h2>
           <p className="mt-2 text-gray-600">Municipio - Ingresa a tu cuenta</p>
