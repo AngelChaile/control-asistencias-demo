@@ -127,6 +127,13 @@ Esto evita manipulaciones externas y protege la información de los empleados.
 👉 **Versión demo:** *(https://control-asistencias-demo.vercel.app/)*
 
 ---
+## 👤 Usuarios de prueba
+
+- **rrhh@gmail.com:** 123456 
+- **compras@gmail.com:** 123456  
+- **ventas@gmail.com:** 123456  
+
+---
 ### **📞 Soporte y Contacto**
 - **Desarrollador Principal:** Angel Chaile
 - **Email:** *angelchaile90@gmail.com*
