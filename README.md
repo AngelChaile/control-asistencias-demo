@@ -24,7 +24,7 @@ Incluye autenticación con roles, un panel administrativo completo y control de 
 
 ## 🧱 Tecnologías utilizadas
 
-- **Frontend:** HTML, CSS, JavaScript, Tailwind 
+- **Frontend:** HTML, CSS, JavaScript, React, Tailwind 
 - **Backend:** Firebase Authentication + Firestore  
 - **Infraestructura:** Vercel (Deploy)  
 - **Otros:** QR Scanner, Modules JS, Firestore Rules por roles
