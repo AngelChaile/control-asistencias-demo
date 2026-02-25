@@ -12,7 +12,7 @@ export default function QrGenerator({ area = "", user }) {
     setLoading(true);
     try {
       const t = makeToken();
-      const validMs = 1000 * 60 * 2; // 2 minutos
+      const validMs = 1000 * 60 * 5; // 5 minutos
       const expiresAt = new Date(Date.now() + validMs).toISOString();
 
       await addDoc(collection(db, "tokens"), {
@@ -196,7 +196,7 @@ export default function QrGenerator({ area = "", user }) {
           ) : (
             <div className="flex items-center justify-center space-x-2">
               <span>🎯</span>
-              <span>Generar QR (2 minutos)</span>
+              <span>Generar QR (5 minutos)</span>
             </div>
           )}
         </button>
@@ -286,8 +286,8 @@ export default function QrGenerator({ area = "", user }) {
       {!qrLink && !loading && (
         <div className="text-center py-8">
           <div className="text-gray-400 text-4xl mb-3">📱</div>
-          <p className="text-gray-600">Presione el botón para generar un código QR</p>
-          <p className="text-sm text-gray-500 mt-1">Cada QR es válido por 2 minutos</p>
+          <p className="text-gray-600">Presione el botón rojo para generar un código QR</p>
+          <p className="text-sm text-gray-500 mt-1">Cada QR es válido por 5 minutos</p>
         </div>
       )}
     </div>
