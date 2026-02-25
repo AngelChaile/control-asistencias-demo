@@ -9,6 +9,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showTestCredentials, setShowTestCredentials] = useState(false);
 
   const navigate = useNavigate();
 
@@ -20,11 +21,9 @@ export default function Login() {
       const userCred = await signInWithEmailAndPassword(auth, email, password);
       const uid = userCred.user.uid;
 
-      // 🔹 Obtener datos del usuario
       const userDoc = await getUserDoc(uid);
       if (!userDoc) throw new Error("No se pudo cargar la información del usuario.");
 
-      // 🔹 Redirigir según rol
       Swal.fire({
         icon: "success",
         title: "¡Bienvenido!",
@@ -59,6 +58,19 @@ export default function Login() {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Datos de prueba
+  const testUsers = [
+    { email: "rrhh@gmail.com", rol: "👑 Recursos Humanos", icon: "👥", color: "purple" },
+    { email: "ventas@gmail.com", rol: "🏢 Ventas", icon: "📊", color: "blue" },
+    { email: "compras@gmail.com", rol: "🏢 Compras", icon: "🛒", color: "green" },
+  ];
+
+  // Función para auto-completar credenciales
+  const fillTestCredentials = (testEmail) => {
+    setEmail(testEmail);
+    setPassword("123456");
   };
 
   return (
@@ -124,12 +136,74 @@ export default function Login() {
                 "Iniciar sesión"
               )}
             </button>
+
+            {/* Separador */}
+            <div className="relative my-4">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-200"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-4 bg-white/80 text-gray-500">O prueba el sistema</span>
+              </div>
+            </div>
+
+            {/* Botón para mostrar credenciales */}
+            <button
+              type="button"
+              onClick={() => setShowTestCredentials(!showTestCredentials)}
+              className="w-full text-sm text-gray-600 hover:text-red-600 flex items-center justify-center space-x-2 py-2"
+            >
+              <span>🔑</span>
+              <span>{showTestCredentials ? 'Ocultar' : 'Mostrar'} credenciales de prueba</span>
+              <span className={`transform transition-transform ${showTestCredentials ? 'rotate-180' : ''}`}>▼</span>
+            </button>
+
+            {/* Tarjeta de credenciales de prueba */}
+            {showTestCredentials && (
+              <div className="mt-4 bg-gradient-to-br from-amber-50 to-yellow-50 rounded-xl border border-amber-200 overflow-hidden animate-fade-in">
+                <div className="bg-amber-100/50 px-4 py-2 border-b border-amber-200">
+                  <h3 className="text-sm font-semibold text-amber-800 flex items-center">
+                    <span className="mr-2">🧪</span>
+                    Usuarios de prueba (contraseña: 123456)
+                  </h3>
+                </div>
+                <div className="p-3 space-y-2">
+                  {testUsers.map((user, index) => (
+                    <div
+                      key={index}
+                      onClick={() => fillTestCredentials(user.email)}
+                      className="flex items-center justify-between p-2 bg-white/80 rounded-lg hover:bg-white hover:shadow-sm cursor-pointer transition-all border border-transparent hover:border-amber-200 group"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <div className={`w-8 h-8 bg-${user.color}-100 rounded-full flex items-center justify-center text-lg`}>
+                          {user.icon}
+                        </div>
+                        <div>
+                          <div className="text-sm font-medium text-gray-900">{user.email}</div>
+                          <div className="text-xs text-gray-500">{user.rol}</div>
+                        </div>
+                      </div>
+                      <div className="text-amber-600 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span className="text-xs">Click para usar</span>
+                        <span className="ml-1">→</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="bg-amber-100/30 px-3 py-2 border-t border-amber-200">
+                  <p className="text-xs text-amber-700 flex items-center">
+                    <span className="mr-1">💡</span>
+                    Haz clic en cualquier usuario para auto-completar
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Footer */}
           <div className="text-center">
             <p className="text-xs text-gray-500">
-              © 2025 Municipalidad - Sistema seguro de gestión de asistencias
+              © 2025 Municipalidad - Versión DEMO para portafolio
             </p>
           </div>
         </form>
